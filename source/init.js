@@ -1,9 +1,9 @@
 'use strict';
+var font = require('postcss-font-helpers');
 
 var postcss = require('postcss');
 var u = require('./utilities');
 var config = require('./config');
-var font = require('./font');
 var convert = require('./conversions');
 var adjust = require('./adjustments');
 
@@ -12,7 +12,7 @@ function getInput(rule, adjustmentDeclaration) {
     var m = u.findDeclaration(rule, 'margin');
     var mt = u.findDeclaration(rule, 'margin-top');
     var mb = u.findDeclaration(rule, 'margin-bottom');
-    var f = convert.fontValues(font.getValues(rule));
+    var f = convert.fontValues(font(rule));
     var topAdjustment = adjust.getTopAdjustment(adjustments, config.topAdjustments);
     var bottomAdjustment = adjust.getBottomAdjustment(adjustments, config.bottomAdjustments);
 

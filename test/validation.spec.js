@@ -8,7 +8,7 @@ var fontSizeKeywords = css.fontSizeKeywords;
 
 describe('Input Validation', function() {
     it('throws an error if line height is not declared', function() {
-        var input = 'a{trim-line-height: to-descender; font: 10em Arial;}';
+        var input = 'a{trim-line-height: to-descender; font-size: 10em; font-family: Arial;}';
         test(input, /Line height must be declared/);
     });
 
@@ -27,7 +27,7 @@ describe('Input Validation', function() {
         var inputs = _.map(lineHeightKeywords, function(lh) {
             return longhandTemplate({ lh: lh });
         });
-        test(inputs, /Line height must be declared/);
+        test(inputs, /expressed as a keyword/);
     });
 
     it('throws an error if font size is not declared', function() {

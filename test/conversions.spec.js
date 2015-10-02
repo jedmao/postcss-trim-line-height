@@ -11,13 +11,8 @@ function test(scenarios, op) {
 
 describe('fontValues integration', function() {
     it('converts family list to first family', function() {
-        var input = { family: 'Arial, Sans-Serif' };
+        var input = { family: ['Arial', 'Sans-Serif'] };
         expect(convert.fontValues(input)).toEqual({ family: 'Arial', size: undefined, lineHeight: undefined });
-    });
-
-    it('strips quotes from the first family name', function() {
-        var input = { family: '"Gill Sans", Arial, Sans-Serif' };
-        expect(convert.fontValues(input)).toEqual({ family: 'Gill Sans', size: undefined, lineHeight: undefined });
     });
 
     it('converts size from percentage to em', function() {
@@ -38,17 +33,15 @@ describe('fontValues integration', function() {
     it('converts line height expressed as calc to subroutine', function() {
         var input = { lineHeight: 'calc(1em + 20%)' };
         expect(convert.fontValues(input)).toEqual({ lineHeight: '(1em + 0.2em)', size: undefined, family: undefined });
-
     });
 
     it('converts line height expressed as percentage to em', function() {
         var input = { lineHeight: '150%' };
         expect(convert.fontValues(input)).toEqual({ lineHeight: '1.5em', size: undefined, family: undefined });
-
     });
 
     it('converts line height expressed as unitless to em', function() {
-        var input = { lineHeight: '1.65' };
+        var input = { lineHeight: 1.65 };
         expect(convert.fontValues(input)).toEqual({ lineHeight: '1.65em', size: undefined, family: undefined });
     });
 });

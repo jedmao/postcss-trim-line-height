@@ -13,9 +13,5 @@ module.exports = {
                 });
             }
         }
-    },
-
-    stripQuotes: function(s) {
-        return s.replace(/'|"/g, '');
     }
 };

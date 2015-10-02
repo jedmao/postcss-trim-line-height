@@ -332,7 +332,7 @@ describe('PostCSS Trim Line Height', function() {
 
         it('adjusts existing longhand bottom and appends longhand top margins', function() {
             var input = 'a{font: 100%/2 Georgia; margin-bottom: 60px; trim-line-height: to-capital to-baseline;}';
-            var output = 'a{font: 100%/2 Georgia; margin-bottom: calc(60px + ((2em - 1em) / -2) + -0.15em); margin-top: calc(((2em - 1em) / -2) + -0.15em);}';
+            var output = 'a{font: 100%/2 Georgia; margin-top: calc(((2em - 1em) / -2) + -0.15em); margin-bottom: calc(60px + ((2em - 1em) / -2) + -0.15em);}';
             test(input, output);
         });
 

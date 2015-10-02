@@ -22,102 +22,87 @@ module.exports = postcss.plugin('trim-line-height', function(opts) {
 
                 validation.validateInput(input);
 
+                function clone(prop, fn, ext, important) {
+                    adjustmentDeclaration.cloneBefore({
+                        prop: prop,
+                        value: fn(_.assign({}, input, ext), options),
+                        important
+                    });
+                }
+
                 if (input.isTopAdjustment && input.isBottomAdjustment && input.isExistingMargin) {
-                    input.margin.replaceWith(
-                        postcss.decl({
-                            prop: targetShorthandProp,
-                            value: getShorthandWithAdjustedTopAndBottom(
-                                _.assign({}, input, { values: postcss.list.space(input.margin.value) }),
-                                options
-                            ),
-                            important: input.margin.important
-                        })
+                    clone(
+                        targetShorthandProp,
+                        getShorthandWithAdjustedTopAndBottom,
+                        { values: postcss.list.space(input.margin.value) },
+                        input.margin.important
                     );
+                    input.margin.remove();
                 } else {
                     if (input.isTopAdjustment) {
                         targetLonghandProp = 'margin-top';
                         if (!input.isExistingMargin && !input.isExistingMarginTop) {
-                            rule.append(
-                                postcss.decl({
-                                    prop: targetLonghandProp,
-                                    value: getAdjustedLonghand(
-                                        _.assign({}, input, { adjustment: input.topAdjustment }),
-                                        options
-                                    )
-                                })
+                            clone(
+                                targetLonghandProp,
+                                getAdjustedLonghand,
+                                { adjustment: input.topAdjustment }
                             );
                         }
 
                         if (input.isExistingMarginTop) {
-                            input.marginTop.replaceWith(
-                                postcss.decl({
-                                    prop: targetLonghandProp,
-                                    value: getAdjustedLonghand(
-                                        _.assign({}, input, {
-                                            existing: input.marginTop.value,
-                                            adjustment: input.topAdjustment
-                                        }),
-                                        options
-                                    ),
-                                    important: input.marginTop.important
-                                })
+                            clone(
+                                targetLonghandProp,
+                                getAdjustedLonghand,
+                                {
+                                    existing: input.marginTop.value,
+                                    adjustment: input.topAdjustment
+                                },
+                                input.marginTop.important
                             );
+                            input.marginTop.remove();
                         }
 
                         if (input.isExistingMargin) {
-                            input.margin.replaceWith(
-                                postcss.decl({
-                                    prop: targetShorthandProp,
-                                    value: getShorthandWithAdjustedTop(
-                                        _.assign({}, input, { values: postcss.list.space(input.margin.value) }),
-                                        options
-                                    ),
-                                    important: input.margin.important
-                                })
+                            clone(
+                                targetShorthandProp,
+                                getShorthandWithAdjustedTop,
+                                { values: postcss.list.space(input.margin.value) },
+                                input.margin.important
                             );
+                            input.margin.remove();
                         }
                     }
                     if (input.isBottomAdjustment) {
                         targetLonghandProp = 'margin-bottom';
                         if (!input.isExistingMargin && !input.isExistingMarginBottom) {
-                            rule.append(
-                                postcss.decl({
-                                    prop: targetLonghandProp,
-                                    value: getAdjustedLonghand(
-                                        _.assign({}, input, { adjustment: input.bottomAdjustment }),
-                                        options
-                                    )
-                                })
+                            clone(
+                                targetLonghandProp,
+                                getAdjustedLonghand,
+                                { adjustment: input.bottomAdjustment }
                             );
                         }
 
                         if (input.isExistingMarginBottom) {
-                            input.marginBottom.replaceWith(
-                                postcss.decl({
-                                    prop: targetLonghandProp,
-                                    value: getAdjustedLonghand(
-                                        _.assign({}, input, {
-                                            existing: input.marginBottom.value,
-                                            adjustment: input.bottomAdjustment
-                                        }),
-                                        options
-                                    ),
-                                    important: input.marginBottom.important
-                                })
+                            clone(
+                                targetLonghandProp,
+                                getAdjustedLonghand,
+                                {
+                                    existing: input.marginBottom.value,
+                                    adjustment: input.bottomAdjustment
+                                },
+                                input.marginBottom.important
                             );
+                            input.marginBottom.remove();
                         }
 
                         if (input.isExistingMargin) {
-                            input.margin.replaceWith(
-                                postcss.decl({
-                                    prop: targetShorthandProp,
-                                    value: getShorthandWithAdjustedBottom(
-                                        _.assign({}, input, { values: postcss.list.space(input.margin.value) }),
-                                        options
-                                    ),
-                                    important: input.margin.important
-                                })
+                            clone(
+                                targetShorthandProp,
+                                getShorthandWithAdjustedBottom,
+                                { values: postcss.list.space(input.margin.value) },
+                                input.margin.important
                             );
+                            input.margin.remove();
                         }
                     }
                 }

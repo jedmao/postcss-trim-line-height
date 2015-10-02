@@ -67,9 +67,4 @@ describe('Input Validation', function() {
         });
         test(inputs, /one of <to-ascender|to-capital> and or one of <to-baseline|to-descender>/);
     });
-
-    it('throws an error if longhand and shorthand margins are specified', function() {
-        var input = 'a{font: 20px/2 Georgia; trim-line-height: to-baseline; margin: 0; margin-top: 20px;}';
-        test(input, /longhand and shorthand/);
-    });
 });

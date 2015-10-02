@@ -12,48 +12,61 @@ function getAdjustedLonghand(p, options) {
 }
 
 function getShorthandWithAdjustedTop(p, options) {
-    var marginValues = p.values;
-    var index = marginValues.length - 1;
+    var m = p.margin;
+    var index = getIndex(m);
     var topLineboxAdjustment = getLineboxAdjustment(p.fontFamily, p.fontWeight, p.topAdjustment, options);
-    var calcTopByTopAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, topLineboxAdjustment, marginValues[0]);
+    var calcTopByTopAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, topLineboxAdjustment, m.top);
 
     return join(index, [
-        [calcTopByTopAdjustmentAndTopValue, marginValues[0],  marginValues[0]],
-        [calcTopByTopAdjustmentAndTopValue, marginValues[1], marginValues[0]],
-        [calcTopByTopAdjustmentAndTopValue, marginValues[1], marginValues[2]],
-        [calcTopByTopAdjustmentAndTopValue, marginValues[1], marginValues[2], marginValues[3]]
+        [calcTopByTopAdjustmentAndTopValue, m.top,  m.top],
+        [calcTopByTopAdjustmentAndTopValue, m.right, m.top],
+        [calcTopByTopAdjustmentAndTopValue, m.right, m.bottom],
+        [calcTopByTopAdjustmentAndTopValue, m.right, m.bottom, m.left]
     ]);
 }
 
+function getIndex(m) {
+    if (m.left === m.right) {
+        if (m.top === m.bottom) {
+            if (m.top === m.right) {
+                return 0;
+            }
+            return 1;
+        }
+        return 2;
+    }
+    return 3;
+}
+
 function getShorthandWithAdjustedBottom(p, options) {
-    var marginValues = p.values;
-    var index = marginValues.length - 1;
+    var m = p.margin;
+    var index = getIndex(m);
     var bottomLineboxAdjustment = getLineboxAdjustment(p.fontFamily, p.fontWeight, p.bottomAdjustment, options);
-    var calcBottomByBottomAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, marginValues[0]);
-    var calcBottomByBottomAdjustmentAndBottomValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, marginValues[2]);
+    var calcBottomByBottomAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, m.top);
+    var calcBottomByBottomAdjustmentAndBottomValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, m.bottom);
 
     return join(index, [
-        [marginValues[0], marginValues[0], calcBottomByBottomAdjustmentAndTopValue],
-        [marginValues[0], marginValues[1], calcBottomByBottomAdjustmentAndTopValue],
-        [marginValues[0], marginValues[1], calcBottomByBottomAdjustmentAndBottomValue],
-        [marginValues[0], marginValues[1], calcBottomByBottomAdjustmentAndBottomValue, marginValues[3]]
+        [m.top, m.top, calcBottomByBottomAdjustmentAndTopValue],
+        [m.top, m.right, calcBottomByBottomAdjustmentAndTopValue],
+        [m.top, m.right, calcBottomByBottomAdjustmentAndBottomValue],
+        [m.top, m.right, calcBottomByBottomAdjustmentAndBottomValue, m.left]
     ]);
 }
 
 function getShorthandWithAdjustedTopAndBottom(p, options) {
-    var marginValues = p.values;
-    var index = marginValues.length - 1;
+    var m = p.margin;
+    var index = getIndex(m);
     var topLineboxAdjustment = getLineboxAdjustment(p.fontFamily, p.fontWeight, p.topAdjustment, options);
     var bottomLineboxAdjustment = getLineboxAdjustment(p.fontFamily, p.fontWeight, p.bottomAdjustment, options);
-    var calcTopByTopAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, topLineboxAdjustment, marginValues[0]);
-    var calcBottomByBottomAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, marginValues[0]);
-    var calcBottomByBottomAdjustmentAndBottomValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, marginValues[2]);
+    var calcTopByTopAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, topLineboxAdjustment, m.top);
+    var calcBottomByBottomAdjustmentAndTopValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, m.top);
+    var calcBottomByBottomAdjustmentAndBottomValue = getCalc(p.fontSize, p.lineHeight, bottomLineboxAdjustment, m.bottom);
 
     return join(index, [
-        [calcTopByTopAdjustmentAndTopValue, marginValues[0], calcBottomByBottomAdjustmentAndTopValue],
-        [calcTopByTopAdjustmentAndTopValue, marginValues[1], calcBottomByBottomAdjustmentAndTopValue],
-        [calcTopByTopAdjustmentAndTopValue, marginValues[1], calcBottomByBottomAdjustmentAndBottomValue],
-        [calcTopByTopAdjustmentAndTopValue, marginValues[1], calcBottomByBottomAdjustmentAndBottomValue, marginValues[3]]
+        [calcTopByTopAdjustmentAndTopValue, m.top, calcBottomByBottomAdjustmentAndTopValue],
+        [calcTopByTopAdjustmentAndTopValue, m.right, calcBottomByBottomAdjustmentAndTopValue],
+        [calcTopByTopAdjustmentAndTopValue, m.right, calcBottomByBottomAdjustmentAndBottomValue],
+        [calcTopByTopAdjustmentAndTopValue, m.right, calcBottomByBottomAdjustmentAndBottomValue, m.left]
     ]);
 }
 

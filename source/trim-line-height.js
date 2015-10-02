@@ -34,10 +34,10 @@ module.exports = postcss.plugin('trim-line-height', function(opts) {
                     clone(
                         targetShorthandProp,
                         getShorthandWithAdjustedTopAndBottom,
-                        { values: postcss.list.space(input.margin.value) },
-                        input.margin.important
+                        { margin: input.margin },
+                        input.marginDecl.important
                     );
-                    input.margin.remove();
+                    input.marginDecl.remove();
                 } else {
                     if (input.isTopAdjustment) {
                         targetLonghandProp = 'margin-top';
@@ -54,22 +54,22 @@ module.exports = postcss.plugin('trim-line-height', function(opts) {
                                 targetLonghandProp,
                                 getAdjustedLonghand,
                                 {
-                                    existing: input.marginTop.value,
+                                    existing: input.marginTopDecl.value,
                                     adjustment: input.topAdjustment
                                 },
-                                input.marginTop.important
+                                input.marginTopDecl.important
                             );
-                            input.marginTop.remove();
+                            input.marginTopDecl.remove();
                         }
 
                         if (input.isExistingMargin) {
                             clone(
                                 targetShorthandProp,
                                 getShorthandWithAdjustedTop,
-                                { values: postcss.list.space(input.margin.value) },
-                                input.margin.important
+                                { margin: input.margin },
+                                input.marginDecl.important
                             );
-                            input.margin.remove();
+                            input.marginDecl.remove();
                         }
                     }
                     if (input.isBottomAdjustment) {
@@ -87,22 +87,22 @@ module.exports = postcss.plugin('trim-line-height', function(opts) {
                                 targetLonghandProp,
                                 getAdjustedLonghand,
                                 {
-                                    existing: input.marginBottom.value,
+                                    existing: input.marginBottomDecl.value,
                                     adjustment: input.bottomAdjustment
                                 },
-                                input.marginBottom.important
+                                input.marginBottomDecl.important
                             );
-                            input.marginBottom.remove();
+                            input.marginBottomDecl.remove();
                         }
 
                         if (input.isExistingMargin) {
                             clone(
                                 targetShorthandProp,
                                 getShorthandWithAdjustedBottom,
-                                { values: postcss.list.space(input.margin.value) },
-                                input.margin.important
+                                { margin: input.margin },
+                                input.marginDecl.important
                             );
-                            input.margin.remove();
+                            input.marginDecl.remove();
                         }
                     }
                 }

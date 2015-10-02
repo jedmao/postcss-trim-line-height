@@ -23,6 +23,7 @@
   "dependencies": {
     "lodash": "^3.10.1",
     "postcss": "^5.0.8",
-    "postcss-font-helpers": "^3.0.0"
+    "postcss-font-helpers": "^3.0.0",
+    "postcss-margin-helpers": "^3.0.0"
   }
 }

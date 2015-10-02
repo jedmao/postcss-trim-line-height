@@ -11,7 +11,6 @@ function validateInput(input) {
     validateLineHeight(input);
     validateFontSize(input);
     validateAdjustments(input);
-    validateMargin(input);
 }
 
 function validateLineHeight(input) {
@@ -33,12 +32,6 @@ function validateFontSize(input) {
 function validateAdjustments(input) {
     if (!areAdjustmentsValid(input.adjustments, c.topAdjustments, c.bottomAdjustments)) {
         throwError('Value must be one of <' + c.topAdjustments.join('|') + '> and or one of <'+ c.bottomAdjustments.join('|') + '>');
-    }
-}
-
-function validateMargin(input) {
-    if (input.isExistingMargin && input.isExistingMarginTop || input.isExistingMargin && input.isExistingMarginBottom) {
-        throwError('Combined longhand and shorthand margin declarations are not supported');
     }
 }
 

@@ -2,6 +2,7 @@
 var font = require('postcss-font-helpers');
 
 var postcss = require('postcss');
+var margin = require('postcss-margin-helpers');
 var u = require('./utilities');
 var config = require('./config');
 var convert = require('./conversions');
@@ -25,9 +26,10 @@ function getInput(rule, adjustmentDeclaration) {
         adjustments: adjustments,
         topAdjustment: topAdjustment,
         bottomAdjustment: bottomAdjustment,
-        margin: m,
-        marginTop: mt,
-        marginBottom: mb,
+        margin: margin(rule),
+        marginDecl: m,
+        marginTopDecl: mt,
+        marginBottomDecl: mb,
         isTopAdjustment: !!topAdjustment,
         isBottomAdjustment: !!bottomAdjustment,
         isExistingMargin: !!m,
